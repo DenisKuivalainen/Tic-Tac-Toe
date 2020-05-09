@@ -30,12 +30,11 @@ public class Field extends JFrame implements ActionListener {
 
         label = new JLabel("");
         label.setBounds(10, 10, 60, 30);
-        labelTurn();
-
 
         resetBtn = new JButton("RST");
         resetBtn.setBounds(80, 10, 60, 30);
         resetBtn.addActionListener(this);
+
 
         modeBtn = new JButton("AI");
         modeBtn.setBounds(150, 10, 60, 30);
@@ -68,6 +67,7 @@ public class Field extends JFrame implements ActionListener {
         btn[8] = new JButton("");
         btn[8].setBounds(150, 200, 60, 60);
 
+        labelTurn();
 
         panel.add(label);
         panel.add(resetBtn);
@@ -76,7 +76,6 @@ public class Field extends JFrame implements ActionListener {
             btn[i].addActionListener(this);
             panel.add(btn[i]);
         }
-
         this.add(panel);
     }
 
@@ -93,24 +92,26 @@ public class Field extends JFrame implements ActionListener {
                     pos = i;
                 }
             }
-            changerOne(pos ,firstPlayerTurn ? "X" : "O");
-            firstPlayerTurn = !firstPlayerTurn;
-            labelTurn();
+            if(xo[pos] != "X" && xo[pos] != "O") {
+                calculateTurn(pos);
+            }
         }
     }
 
+    // Заменяет значения кнопок на str
     void changer(String str) {
         for (int i = 0; i < 9; i++) {
-            xo[i] = str;
-            btn[i].setText(str);
+            changerOne(i, str);
         }
     }
 
+    // Заменяет значение кнопки а на str
     void changerOne(int a, String str){
         xo[a] = str;
         btn[a].setText(str);
     }
 
+    // Убирает значения всех кнопок
     void clickReset() {
         changer("");
         playable = true;
@@ -119,6 +120,7 @@ public class Field extends JFrame implements ActionListener {
         labelTurn();
     }
 
+    // Переключает режим и работает как clickReset()
     void clickMode() {
         changer("");
         playable = true;
@@ -128,7 +130,43 @@ public class Field extends JFrame implements ActionListener {
         labelTurn();
     }
 
+    // Пишет чей сейчас ход
     void labelTurn() {
         label.setText((firstPlayerTurn ? "X" : "O") + " turn!");
+    }
+
+    //Проверить на ничью
+    boolean draw() {
+        for(int i = 0; i < 9; i++) {
+            String a = xo[i];
+            if((a != "X") && (a != "O")) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Определение типы игры
+    void calculateTurn(int p) {
+        ppGame(p);
+    }
+
+    // Ходят игроки
+    void ppGame(int pInh) {
+        changerOne(pInh, firstPlayerTurn ? "X" : "O");
+        if(new Check(xo).checkWin()){
+            playable = !playable;
+            label.setText((firstPlayerTurn ? "X" : "O") + " wins!");
+            return;
+        }
+        System.out.println(draw());
+        System.out.println(xo[pInh]);
+        if(draw()){
+            playable = !playable;
+            label.setText("Draw!");
+            return;
+        }
+        firstPlayerTurn = !firstPlayerTurn;
+        labelTurn();
     }
 }
