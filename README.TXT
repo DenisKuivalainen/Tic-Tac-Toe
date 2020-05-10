@@ -1,6 +1,4 @@
-	|=======|
-	| X! O! |
-	|=======|
+X! O! - Tic Tak Toe game. 
 
 I. RULES
 	The object of Tic Tac Toe is to get three in a row. 
