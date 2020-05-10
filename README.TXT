@@ -1,4 +1,4 @@
-X! O! - Tic Tak Toe game. 
+X! O! Super! - extended Tic Tak Toe game.
 
 Game available by URL:
 https://drive.google.com/open?id=1iX5fRdKQ86UIfo-ZbKb_sH0f78xy6m0y
