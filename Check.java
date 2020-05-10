@@ -9,8 +9,10 @@ public class Check {
         this.rows = new WinningCombo().winningCombos();
     }
 
+    // Проверяет значения поля на победу
+    // Checks field values for winning combinations
     public boolean checkWin() {
-        for(int j = 0; j < 7; j++) {
+        for(int j = 0; j < 8; j++) {
             if(xo[rows[j][0]] == xo[rows[j][1]] &&
                     xo[rows[j][0]] == xo[rows[j][1]] &&
                     xo[rows[j][0]] == xo[rows[j][2]] &&

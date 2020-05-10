@@ -3,9 +3,13 @@ package com.kuivalainen;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
+import java.util.Timer;
 
 public class Field extends JFrame implements ActionListener {
     JLabel label;
+    // As I add, remove and rewrite elements, I supposed to use Arrays instead ArrayList or LinkedList, despite their adventures
+    // As swing does not support ID for elements, I use array for this purpose
     JButton[] btn = new JButton[9];
     JButton resetBtn;
     JButton modeBtn;
@@ -79,6 +83,7 @@ public class Field extends JFrame implements ActionListener {
         this.add(panel);
     }
 
+    // Button pressed listener
     public void actionPerformed(ActionEvent e) {
         int pos = 0;
 
@@ -99,6 +104,7 @@ public class Field extends JFrame implements ActionListener {
     }
 
     // Заменяет значения кнопок на str
+    // Change ALL buttons' text value
     void changer(String str) {
         for (int i = 0; i < 9; i++) {
             changerOne(i, str);
@@ -106,21 +112,30 @@ public class Field extends JFrame implements ActionListener {
     }
 
     // Заменяет значение кнопки а на str
+    // Change button text value
     void changerOne(int a, String str){
         xo[a] = str;
         btn[a].setText(str);
     }
 
     // Убирает значения всех кнопок
+    // Remove all buttons' text value
     void clickReset() {
         changer("");
         playable = true;
         firstPlayerFirst = !firstPlayerFirst;
         firstPlayerTurn = firstPlayerFirst;
         labelTurn();
+
+        // Если компьютер ходит первым
+        // If game starts with code turn
+        if(!firstPlayerFirst && versusAI) {
+            aiPlays();
+        }
     }
 
     // Переключает режим и работает как clickReset()
+    // Change game mode (similar to clickReset())
     void clickMode() {
         changer("");
         playable = true;
@@ -131,11 +146,13 @@ public class Field extends JFrame implements ActionListener {
     }
 
     // Пишет чей сейчас ход
+    // Set whos turn it is now
     void labelTurn() {
         label.setText((firstPlayerTurn ? "X" : "O") + " turn!");
     }
 
-    //Проверить на ничью
+    // Проверить на ничью
+    // Check if the game is ended with draw
     boolean draw() {
         for(int i = 0; i < 9; i++) {
             String a = xo[i];
@@ -147,11 +164,17 @@ public class Field extends JFrame implements ActionListener {
     }
 
     // Определение типы игры
+    // Define type of game
     void calculateTurn(int p) {
-        ppGame(p);
+        if(versusAI) {
+            aiSecond(p);
+        } else {
+            ppGame(p);
+        }
     }
 
     // Ходят игроки
+    // PP mode - player vs player
     void ppGame(int pInh) {
         changerOne(pInh, firstPlayerTurn ? "X" : "O");
         if(new Check(xo).checkWin()){
@@ -159,8 +182,7 @@ public class Field extends JFrame implements ActionListener {
             label.setText((firstPlayerTurn ? "X" : "O") + " wins!");
             return;
         }
-        System.out.println(draw());
-        System.out.println(xo[pInh]);
+
         if(draw()){
             playable = !playable;
             label.setText("Draw!");
@@ -168,5 +190,54 @@ public class Field extends JFrame implements ActionListener {
         }
         firstPlayerTurn = !firstPlayerTurn;
         labelTurn();
+    }
+
+    // Игра против компа
+    // AI mode - player vs code
+    // AI play only after player
+    void aiSecond(int pInh) {
+        changerOne(pInh, "X");
+        if(new Check(xo).checkWin()){
+            playable = !playable;
+            label.setText((firstPlayerTurn ? "X" : "O") + " wins!");
+            return;
+        }
+        if(draw()){
+            playable = !playable;
+            label.setText("Draw!");
+            return;
+        }
+        firstPlayerTurn = !firstPlayerTurn;
+        labelTurn();
+        playable = false;
+        TimerTask timertask = new TimerTask() {
+            @Override
+            public void run() {
+                aiPlays();
+            }
+        };
+        Timer timer = new Timer();
+        timer.schedule(timertask, 500);
+    }
+
+    // Логика хода компьютера
+    // Logic of code turn
+    void aiPlays() {
+        CompMind mind = new CompMind(xo);
+        changerOne(mind.getValue(), "O");
+
+        if(new Check(xo).checkWin()){
+            playable = false;
+            label.setText((firstPlayerTurn ? "X" : "O") + " wins!");
+            return;
+        } else if(draw()){
+            playable = false;
+            label.setText("Draw!");
+            return;
+        } else {
+            firstPlayerTurn = !firstPlayerTurn;
+            labelTurn();
+            playable = true;
+        }
     }
 }
