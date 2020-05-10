@@ -34,6 +34,13 @@ III. GAMEMODE
 	2. "PP" mode - gamemode for 2 Players
 
 
+Download X! O! Super!:
+https://drive.google.com/open?id=1EZ8Md8h1PbMlpLJE3GEkYdsUSRvgor7t
+
+X! O! Super! GitHub repository:
+https://github.com/DenisKuivalainen/Tic-Tac-Toe/tree/5x5
+
+
 
 Made by Denis Kuivalainen
 2020
