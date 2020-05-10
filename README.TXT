@@ -1,5 +1,11 @@
 X! O! - Tic Tak Toe game. 
 
+Game available by URL:
+https://drive.google.com/open?id=1iX5fRdKQ86UIfo-ZbKb_sH0f78xy6m0y
+
+GitHub repository:
+https://github.com/DenisKuivalainen/Tic-Tac-Toe
+
 I. RULES
 	The object of Tic Tac Toe is to get three in a row. 
 	You play on a three by three game board. 
