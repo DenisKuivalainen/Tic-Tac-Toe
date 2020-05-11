@@ -1,5 +1,7 @@
 package com.kuivalainen;
 
+import java.util.LinkedList;
+
 public class Check {
     String[] xo;
     int[][] rows;
@@ -23,5 +25,29 @@ public class Check {
             }
         }
         return false;
+    }
+
+    // Creates list of empty cells
+    public LinkedList<Integer> checkFill() {
+        LinkedList<Integer> empty = new LinkedList<>();
+
+        for (int i = 0; i < xo.length; i++) {
+            if(xo[i] != "X" && xo[i] != "O") {
+                empty.add(i);
+            }
+        }
+
+        return empty;
+    }
+
+    // Checks if draw
+    public boolean draw() {
+        for(int i = 0; i < 25; i++) {
+            if((xo[i] != "X") && (xo[i] != "O")) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

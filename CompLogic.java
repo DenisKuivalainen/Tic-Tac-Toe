@@ -11,14 +11,6 @@ public class CompLogic implements CompInterface {
         this.cell = cell;
     }
 
-    // Checks if the cell already filled
-    public int cellFill() {
-        if(xo[cell] == "X" || xo[cell] == "O") {
-            return -100000;
-        }
-
-        return 0;
-    }
 
     // Checks if central cell is empty
     public int cellCenter() {

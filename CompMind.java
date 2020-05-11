@@ -1,11 +1,13 @@
 package com.kuivalainen;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Collections;
 
 public class CompMind {
     String[] xo;
-    ArrayList<Integer> cell = new ArrayList<Integer>();
+    LinkedList<Integer> cell = new LinkedList<>();
+    ArrayList<Integer> empty = new ArrayList<>();
 
     CompMind (String[] xo) {
         this.xo = xo;
@@ -13,9 +15,11 @@ public class CompMind {
 
     // Calculate value to select the cell
     void giveValue() {
-        for(int i = 0; i < 9; i++) {
+        empty = new ArrayList<>(new Check(xo).checkFill());
+
+        for(Integer i : empty) {
             CompInterface logic = new CompLogic(xo, i);
-            int value = logic.cellFill() + logic.cellCenter() + logic.cellOO() + logic.cellXX() + logic.cellNoX() + logic.cellHasO() + logic.cellHasX();
+            int value = logic.cellCenter() + logic.cellOO() + logic.cellXX() + logic.cellNoX() + logic.cellHasO() + logic.cellHasX();
             cell.add(value);
         }
     }
@@ -23,6 +27,6 @@ public class CompMind {
     // Select a cell with maximum value
     public int getValue() {
         giveValue();
-        return cell.indexOf(Collections.max(cell));
+        return empty.get(cell.indexOf(Collections.max(cell)));
     }
 }

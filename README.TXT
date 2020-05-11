@@ -1,10 +1,16 @@
-X! O! - Tic Tak Toe game. 
+X! O! - Tic Tak Toe game.
+v1.1
 
 Game available by URL:
 https://drive.google.com/open?id=1iX5fRdKQ86UIfo-ZbKb_sH0f78xy6m0y
 
 GitHub repository:
 https://github.com/DenisKuivalainen/Tic-Tac-Toe
+
+PATCH NOTES
+v1.1
+    - Number of operations during opponent turn in "AI" mode was reduced.
+    - Code was reorganized in case of complexity.
 
 I. RULES
 	The object of Tic Tac Toe is to get three in a row. 
@@ -13,7 +19,7 @@ I. RULES
 	Players alternate placing "X" and "O" on the game board until either oppent has three in a row or all nine squares are filled. 
 
 II. INTERFACE
-	Interface devided into 2 parts: control field on top and game field in the bottom.
+	Interface divided into 2 parts: control field on top and game field in the bottom.
 
 	Control field contains information field and 2 buttons:
 	1. Information field displays status of the game:
