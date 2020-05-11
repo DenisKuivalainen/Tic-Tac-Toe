@@ -20,6 +20,7 @@ public class Field extends JFrame implements ActionListener {
     boolean firstPlayerFirst = true;
     boolean versusAI = true;
     boolean firstPlayerTurn = true;
+    Check check;
 
     Field() {
         super("X! O! Super!");
@@ -119,8 +120,6 @@ public class Field extends JFrame implements ActionListener {
         btn[24] = new JButton("");
         btn[24].setBounds(290, 340, 60, 60);
 
-
-
         labelTurn();
 
         panel.add(label);
@@ -136,6 +135,7 @@ public class Field extends JFrame implements ActionListener {
     // Button pressed listener
     public void actionPerformed(ActionEvent e) {
         int pos = 0;
+        check = new Check(xo);
 
         if(e.getActionCommand().equals("RST")) {
             clickReset();
@@ -201,18 +201,6 @@ public class Field extends JFrame implements ActionListener {
         label.setText((firstPlayerTurn ? "X" : "O") + " turn!");
     }
 
-    // Проверить на ничью
-    // Check if the game is ended with draw
-    boolean draw() {
-        for(int i = 0; i < 25; i++) {
-            String a = xo[i];
-            if((a != "X") && (a != "O")) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     // Определение типы игры
     // Define type of game
     void calculateTurn(int p) {
@@ -233,7 +221,7 @@ public class Field extends JFrame implements ActionListener {
             return;
         }
 
-        if(draw()){
+        if(check.draw()){
             playable = !playable;
             label.setText("Draw!");
             return;
@@ -252,7 +240,7 @@ public class Field extends JFrame implements ActionListener {
             label.setText((firstPlayerTurn ? "X" : "O") + " wins!");
             return;
         }
-        if(draw()){
+        if(check.draw()){
             playable = !playable;
             label.setText("Draw!");
             return;
@@ -280,7 +268,7 @@ public class Field extends JFrame implements ActionListener {
             playable = false;
             label.setText((firstPlayerTurn ? "X" : "O") + " wins!");
             return;
-        } else if(draw()){
+        } else if(check.draw()){
             playable = false;
             label.setText("Draw!");
             return;
