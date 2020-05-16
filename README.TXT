@@ -11,6 +11,8 @@ v1.1
     - New algorithm of valuing and parameters for cells in "AI" mode.
     - Number of operations during opponent turn in "AI" mode was reduced.
     - Code was reorganized in case of complexity.
+v1.2
+    - Rendering of buttons was reorganized.
 
 I. RULES
 	The object of extended Tic Tac Toe is to get four in a row. 
