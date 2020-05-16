@@ -10,7 +10,7 @@ public class Field extends JFrame implements ActionListener {
     JLabel label;
     // As I add, remove and rewrite elements, I supposed to use Arrays instead ArrayList or LinkedList, despite their adventures
     // As swing does not support ID for elements, I use array for this purpose
-    JButton[] btn = new JButton[9];
+    JButton[][] btn = new JButton[3][3];
     JButton resetBtn;
     JButton modeBtn;
     JPanel panel;
@@ -45,42 +45,20 @@ public class Field extends JFrame implements ActionListener {
         modeBtn.setBounds(150, 10, 60, 30);
         modeBtn.addActionListener(this);
 
-        btn[0] = new JButton("");
-        btn[0].setBounds(10, 60, 60, 60);
-
-        btn[1] = new JButton("");
-        btn[1].setBounds(80, 60, 60, 60);
-
-        btn[2] = new JButton("");
-        btn[2].setBounds(150, 60, 60, 60);
-
-        btn[3] = new JButton("");
-        btn[3].setBounds(10, 130, 60, 60);
-
-        btn[4] = new JButton("");
-        btn[4].setBounds(80, 130, 60, 60);
-
-        btn[5] = new JButton("");
-        btn[5].setBounds(150, 130, 60, 60);
-
-        btn[6] = new JButton("");
-        btn[6].setBounds(10, 200, 60, 60);
-
-        btn[7] = new JButton("");
-        btn[7].setBounds(80, 200, 60, 60);
-
-        btn[8] = new JButton("");
-        btn[8].setBounds(150, 200, 60, 60);
+        for(int i = 0; i < 3; i++) {
+            for(int j = 0; j < 3; j++) {
+                btn[i][j] = new JButton("");
+                btn[i][j].setBounds(10 + j * 70, 60 + i * 70, 60, 60);
+                btn[i][j].addActionListener(this);
+                panel.add(btn[i][j]);
+            }
+        }
 
         labelTurn();
 
         panel.add(label);
         panel.add(resetBtn);
         panel.add(modeBtn);
-        for(int i = 0; i < 9; i++){
-            btn[i].addActionListener(this);
-            panel.add(btn[i]);
-        }
         this.add(panel);
     }
 
@@ -94,9 +72,11 @@ public class Field extends JFrame implements ActionListener {
         } else if(e.getActionCommand().equals("PP") || e.getActionCommand().equals("AI")) {
             clickMode();
         } else if(playable) {
-            for (int i = 0; i < 9; i++) {
-                if (e.getSource() == btn[i]) {
-                    pos = i;
+            for(int i = 0; i < 3; i++) {
+                for(int j = 0; j < 3; j++) {
+                    if (e.getSource() == btn[i][j]) {
+                        pos = i * 3 + j;
+                    }
                 }
             }
             if(xo[pos] != "X" && xo[pos] != "O") {
@@ -116,8 +96,10 @@ public class Field extends JFrame implements ActionListener {
     // Заменяет значение кнопки а на str
     // Change button text value
     void changerOne(int a, String str){
+        int i = (int) (Math.floor(a / 3));
+        int j = a % 3;
         xo[a] = str;
-        btn[a].setText(str);
+        btn[i][j].setText(str);
     }
 
     // Убирает значения всех кнопок

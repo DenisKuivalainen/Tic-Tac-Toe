@@ -11,6 +11,9 @@ PATCH NOTES
 v1.1
     - Number of operations during opponent turn in "AI" mode was reduced.
     - Code was reorganized in case of complexity.
+v1.2
+    - Bug related to Draw situation fixed.
+    - Rendering of buttons was reorganized.
 
 I. RULES
 	The object of Tic Tac Toe is to get three in a row. 

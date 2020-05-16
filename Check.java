@@ -42,7 +42,7 @@ public class Check {
 
     // Checks if draw
     public boolean draw() {
-        for(int i = 0; i < 25; i++) {
+        for(int i = 0; i < 9; i++) {
             if((xo[i] != "X") && (xo[i] != "O")) {
                 return false;
             }
